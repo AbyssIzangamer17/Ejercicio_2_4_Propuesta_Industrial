@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>A-SPECTRA: Propuesta de Innovación IA Industrial</title>
+    <title>A-SPECTRA: Innovación IA Industrial</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,11 +18,12 @@
             color: white;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         header {
-            height: 70vh;
-            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070');
+            height: 60vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -36,63 +37,68 @@
             font-size: 4rem;
             margin: 0;
             color: var(--p);
-            letter-spacing: 4px;
-        }
-
-        .tagline {
-            font-size: 1.5rem;
-            font-weight: 300;
-            margin-top: 10px;
-            opacity: 0.8;
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
         }
 
         .section {
-            max-width: 1000px;
-            margin: 80px auto;
+            max-width: 1100px;
+            margin: 60px auto;
             padding: 0 20px;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 40px;
         }
 
         .card {
             background: var(--card);
             padding: 30px;
+            border-radius: 24px;
+            border-left: 5px solid var(--p);
+        }
+
+        .wave-box {
+            background: #000;
             border-radius: 20px;
-            border-top: 4px solid var(--p);
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
         }
 
-        .highlight {
-            color: var(--p);
-            font-weight: 600;
+        #wave-canvas {
+            width: 100%;
+            height: 100%;
         }
 
-        footer {
-            padding: 40px;
-            text-align: center;
-            border-top: 1px solid #333;
-            font-size: 0.9rem;
-            color: #666;
+        .status-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
         }
 
-        .btn-prop {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 15px 40px;
+        .btn-action {
             background: var(--p);
             color: #000;
-            font-weight: bold;
+            padding: 12px 30px;
             border-radius: 50px;
             text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
             transition: 0.3s;
         }
 
-        .btn-prop:hover {
+        .btn-action:hover {
+            box-shadow: 0 0 20px var(--p);
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
         }
     </style>
 </head>
@@ -100,47 +106,73 @@
 <body>
     <header>
         <h1>A-SPECTRA</h1>
-        <p class="tagline">Mantenimiento Predictivo Autónomo por Espectrometría Visual</p>
-        <a href="#propuesta" class="btn-prop">Analizar Propuesta</a>
+        <p style="font-size: 1.4rem; opacity: 0.7;">Análisis de Fatiga por Espectrometría Visual Asistida por IA</p>
     </header>
 
-    <div class="section" id="propuesta">
-        <h2>1. El Problema</h2>
-        <p>El <span class="highlight">42% de los fallos</span> mecánicos en plantas de robótica ocurren por desgaste no
-            detectado visualmente por operarios. Los métodos actuales requieren paradas de línea para análisis manuales
-            de lubricantes o inspecciones por ultrasonidos.</p>
-
-        <div class="grid" style="margin-top: 60px;">
-            <div class="card">
-                <h3>🔍 Visión Espectral</h3>
-                <p>Uso de cámaras hiperespectrales que analizan la firma de calor y la reflexión molecular del metal en
-                    movimiento.</p>
+    <div class="section">
+        <div class="grid">
+            <div>
+                <h2>Propuesta Tecnológica</h2>
+                <p>Implementación de un sistema de <span style="color:var(--p)">Edge-AI</span> que utiliza visión
+                    hiperespectral para monitorizar la integridad estructural de robots industriales en tiempo real.</p>
+                <div class="card">
+                    <h3>Impacto en OEE</h3>
+                    <p>Reducción del downtime técnico en un 35%. <br>Ahorro anual estimado: $120,000 por línea de
+                        ensamblaje.</p>
+                </div>
+                <div style="margin-top: 30px;">
+                    <a href="#" class="btn-action">DESCARGAR INFORME TÉCNICO</a>
+                </div>
             </div>
-            <div class="card">
-                <h3>🧠 Agente IA Auditor</h3>
-                <p>Un agente autónomo procesa 120 fotogramas por segundo, detectando micro-fisuras y fatiga de material
-                    imperceptibles al ojo humano.</p>
+            <div class="wave-box">
+                <div class="status-tag" id="status">SPECTRA OK</div>
+                <canvas id="wave-canvas"></canvas>
             </div>
-            <div class="card">
-                <h3>🛠️ Acción Proactiva</h3>
-                <p>El sistema no solo alerta, sino que genera el código SCL para reducir la velocidad del eje afectado y
-                    minimizar el daño hasta la llegada del técnico.</p>
-            </div>
-        </div>
-
-        <div
-            style="margin-top: 80px; padding: 40px; background: rgba(245, 158, 11, 0.05); border-left: 4px solid var(--p);">
-            <h3>Viabilidad Técnica</h3>
-            <p>Propuesta basada en hardware existente (Cámaras CMOS de alta sensibilidad) y algoritmos de Computer
-                Vision que pueden ser desplegados en local (Edge Computing) para garantizar la latencia baja en líneas
-                de montaje.</p>
-            <p><span class="highlight">Ahorro estimado:</span> -30% en costes de mantenimiento anual.</p>
         </div>
     </div>
 
-    <footer>
+    <footer style="text-align: center; padding: 50px; color: #444; border-top: 1px solid #222;">
         Documento realizado por <b>Izan Urios</b> de 3R de Automatización y Robótica industrial
     </footer>
+
+    <script>
+        const canvas = document.getElementById('wave-canvas');
+        const ctx = canvas.getContext('2d');
+        const status = document.getElementById('status');
+        let offset = 0;
+
+        function draw() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 2;
+
+            for (let x = 0; x < canvas.width; x++) {
+                const y = Math.sin(x * 0.05 + offset) * 50 + 150 + Math.random() * 10;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Anomalía aleatoria
+            if (Math.random() > 0.98) {
+                status.innerText = "ANOMALY DETECTED";
+                status.style.background = "rgba(255,0,0,0.2)";
+                status.style.color = "#ff0000";
+            } else if (Math.random() < 0.05) {
+                status.innerText = "SPECTRA OK";
+                status.style.background = "rgba(0,255,0,0.2)";
+                status.style.color = "#00ff00";
+            }
+
+            offset += 0.1;
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
 </body>
 
 </html>
