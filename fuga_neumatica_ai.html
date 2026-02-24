@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AcousticLeak-AI | Innovación en Eficiencia Neumática</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --p: #06b6d4;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #22d3ee;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: white;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(rgba(6, 182, 212, 0.1), transparent);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: var(--accent);
+            letter-spacing: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Audio Simulation Visualizer */
+        .analyzer {
+            background: #000;
+            border-radius: 20px;
+            height: 250px;
+            margin: 30px 0;
+            position: relative;
+            border: 1px solid #334155;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+            gap: 2px;
+        }
+
+        .bar {
+            flex: 1;
+            background: var(--p);
+            min-height: 5px;
+            transition: 0.1s;
+            border-radius: 2px 2px 0 0;
+            opacity: 0.7;
+        }
+
+        .leak-dot {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.4);
+            border: 2px solid #ef4444;
+            display: none;
+            filter: blur(15px);
+        }
+
+        .status-pill {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+
+        .ok {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .warn {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .btn {
+            background: var(--p);
+            color: #020617;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        }
+
+        .scl-output {
+            background: #000;
+            color: #4ade80;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-top: 20px;
+            display: none;
+            border: 1px solid #1f2937;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <p style="text-transform: uppercase; letter-spacing: 5px; color: var(--p); margin-bottom: 10px;">Propuesta
+            Industrial Viable v2.0</p>
+        <h1>AcousticLeak-AI</h1>
+        <p style="font-size: 1.2rem; opacity: 0.7;">Optimización Energética mediante Detección de Fugas en Circuitos
+            Neumáticos asistida por IA</p>
+    </div>
+
+    <div class="grid">
+        <div class="panel">
+            <div id="status-tag" class="status-pill ok">SISTEMA: MONITORIZANDO RUIDO AMBIENTE</div>
+            <h2>Análisis de Frecuencias Externas</h2>
+            <p style="color: #94a3b8; font-size: 0.95rem;">Utilizamos micrófonos MEMS ultrasónicos instalados en la
+                estructura de la planta (fuera de los robots) para separar el ruido operativo de las fugas de aire.</p>
+
+            <div class="analyzer" id="analyzer">
+                <!-- Bars dynamic -->
+                <div id="leak-visual" class="leak-dot"></div>
+            </div>
+
+            <button class="btn" onclick="startDetection()">INICIAR DIAGNÓSTICO ACÚSTICO</button>
+        </div>
+
+        <div class="panel">
+            <h2>Informe de Viabilidad</h2>
+            <div id="report" style="line-height: 1.6; color: #cbd5e1;">
+                <p>Las fugas de aire comprimido pueden representar hasta un <span style="color:var(--p)">30% de la
+                        pérdida energética</span> en una planta automatizada.</p>
+                <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li><strong>Instalación:</strong> Fuera de las partes móviles.</li>
+                        <li><strong>IA:</strong> Clasificación por redes neuronales convolucionales (CNN) de
+                            espectrogramas.</li>
+                        <li><strong>Impacto:</strong> Ahorro inmediato en factura eléctrica y vida útil del compresor.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="scl-container" style="display:none;">
+                <h3 style="color: #ef4444;">Acción Correctiva (SCL):</h3>
+                <div id="scl-text" class="scl-output"></div>
+                <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">Copia este bloque para monitorizar la
+                    presión en el PLC afectado.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 60px; color: #475569; font-size: 0.85rem;">
+        Documento realizado por <b>Izan Urios</b> de 3R de Automatización y Robótica industrial
+    </footer>
+
+    <script>
+        const analyzer = document.getElementById('analyzer');
+        const bars = [];
+        for (let i = 0; i < 30; i++) {
+            const b = document.createElement('div');
+            b.className = 'bar';
+            analyzer.appendChild(b);
+            bars.push(b);
+        }
+
+        let animating = true;
+        function animate() {
+            if (!animating) return;
+            bars.forEach(b => {
+                const h = Math.random() * 100 + 20;
+                b.style.height = h + 'px';
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        function startDetection() {
+            const status = document.getElementById('status-tag');
+            const leakVis = document.getElementById('leak-visual');
+            const sclCont = document.getElementById('scl-container');
+            const sclText = document.getElementById('scl-text');
+
+            status.innerText = "SISTEMA: ESCANEANDO ULTRASONIDOS...";
+            status.className = "status-pill";
+            status.style.background = "rgba(59, 130, 246, 0.2)";
+            status.style.color = "#3b82f6";
+
+            setTimeout(() => {
+                const isLeak = Math.random() > 0.4;
+                if (isLeak) {
+                    status.innerText = "ALERTA: FUGA DETECTADA EN LÍNEA L3";
+                    status.className = "status-pill warn";
+                    leakVis.style.display = 'block';
+                    leakVis.style.left = (Math.random() * 200 + 50) + 'px';
+                    leakVis.style.bottom = (Math.random() * 100 + 50) + 'px';
+
+                    sclCont.style.display = 'block';
+                    sclText.style.display = 'block';
+                    sclText.innerText = `IF #L3_AirPressure < #Min_Threshold THEN\n  #Válvula_Corte_L3 := TRUE; // Aislamiento preventivo\n  #IA_Leak_Alarm := TRUE;\n  #Leak_Coordinates := 'Rack_C4_Sensor_02';\nEND_IF;`;
+
+                    bars.forEach(b => {
+                        b.style.background = "#ef4444";
+                        b.style.height = (Math.random() * 150 + 50) + "px";
+                    });
+                    animating = false;
+                } else {
+                    status.innerText = "SISTEMA: ESTADO ÓPTIMO";
+                    status.className = "status-pill ok";
+                    leakVis.style.display = 'none';
+                    sclCont.style.display = 'none';
+                    animating = true;
+                    animate();
+                }
+            }, 2500);
+        }
+    </script>
+</body>
+
+</html>
