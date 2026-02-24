@@ -3,13 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>A-SPECTRA: Innovación IA Industrial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>A-SPECTRA | Simulador de Análisis Predictivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --p: #f59e0b;
-            --bg: #0f172a;
-            --card: #1e293b;
+            --bg: #020617;
+            --card: #0f172a;
+            --accent: #fbbf24;
         }
 
         body {
@@ -17,161 +19,185 @@
             background: var(--bg);
             color: white;
             margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
-        header {
-            height: 60vh;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-            color: var(--p);
-            text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
-        }
-
-        .section {
-            max-width: 1100px;
-            margin: 60px auto;
-            padding: 0 20px;
+            padding: 40px;
         }
 
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
-        .card {
+        .lab-panel {
             background: var(--card);
-            padding: 30px;
             border-radius: 24px;
-            border-left: 5px solid var(--p);
+            padding: 40px;
+            border: 1px solid rgba(245, 158, 11, 0.1);
         }
 
-        .wave-box {
+        h1 {
+            margin: 0 0 10px 0;
+            color: var(--p);
+            font-size: 2.5rem;
+        }
+
+        .scan-window {
             background: #000;
             border-radius: 20px;
-            height: 300px;
+            height: 250px;
+            margin: 30px 0;
             position: relative;
+            border: 1px solid #1e293b;
             overflow: hidden;
-            border: 1px solid #333;
         }
 
-        #wave-canvas {
+        canvas {
             width: 100%;
             height: 100%;
         }
 
-        .status-tag {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 255, 0, 0.2);
-            color: #00ff00;
-            padding: 5px 15px;
+        .diagnostic-card {
+            background: #1e293b;
             border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.8rem;
+            padding: 30px;
+            border-top: 5px solid var(--p);
         }
 
-        .btn-action {
+        .scl-code {
+            background: #000;
+            color: #4ade80;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .btn {
             background: var(--p);
             color: #000;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
             font-weight: bold;
-            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
             transition: 0.3s;
         }
 
-        .btn-action:hover {
-            box-shadow: 0 0 20px var(--p);
-            transform: scale(1.05);
+        .btn:hover {
+            background: var(--accent);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>A-SPECTRA</h1>
-        <p style="font-size: 1.4rem; opacity: 0.7;">Análisis de Fatiga por Espectrometría Visual Asistida por IA</p>
-    </header>
+    <div class="grid">
+        <div class="lab-panel">
+            <span class="tag" style="background: rgba(245, 158, 11, 0.2); color: var(--p);">LABORATORIO IA
+                INDUSTRIAL</span>
+            <h1>A-SPECTRA Simulator</h1>
+            <p>Introduce una lectura de frecuencia o inicia el auto-escaneo para detectar fatiga molecular en los ejes
+                del robot.</p>
 
-    <div class="section">
-        <div class="grid">
-            <div>
-                <h2>Propuesta Tecnológica</h2>
-                <p>Implementación de un sistema de <span style="color:var(--p)">Edge-AI</span> que utiliza visión
-                    hiperespectral para monitorizar la integridad estructural de robots industriales en tiempo real.</p>
-                <div class="card">
-                    <h3>Impacto en OEE</h3>
-                    <p>Reducción del downtime técnico en un 35%. <br>Ahorro anual estimado: $120,000 por línea de
-                        ensamblaje.</p>
-                </div>
-                <div style="margin-top: 30px;">
-                    <a href="#" class="btn-action">DESCARGAR INFORME TÉCNICO</a>
+            <div class="scan-window">
+                <canvas id="wave"></canvas>
+                <div id="scan-line"
+                    style="position: absolute; top:0; left: 0; width: 2px; height: 100%; background: var(--p); box-shadow: 0 0 15px var(--p); transition: 0.05s;">
                 </div>
             </div>
-            <div class="wave-box">
-                <div class="status-tag" id="status">SPECTRA OK</div>
-                <canvas id="wave-canvas"></canvas>
+
+            <button class="btn" onclick="startScan()">INICIAR ESCANEO ESPECTRAL</button>
+        </div>
+
+        <div class="diagnostic-card">
+            <h2>Resultado del Diagnóstico</h2>
+            <div id="diag-status" style="margin: 20px 0; font-size: 1.2rem;">Esperando captura de datos...</div>
+            <div id="diag-details" style="color: #94a3b8; line-height: 1.6;">Inicia el escaneo para que el agente IA
+                analice las micro-desviaciones térmicas y estructurales del material.</div>
+
+            <div id="action-box" style="display:none; margin-top: 30px;">
+                <h3 style="color: var(--p);">SCL Correctivo Generado:</h3>
+                <p style="font-size: 0.85rem;">Copia este código en tu PLC para mitigar el riesgo:</p>
+                <div class="scl-code" id="scl"></div>
             </div>
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 50px; color: #444; border-top: 1px solid #222;">
+    <div style="text-align: center; margin-top: 60px; color: #4b5563;">
         Documento realizado por <b>Izan Urios</b> de 3R de Automatización y Robótica industrial
-    </footer>
+    </div>
 
     <script>
-        const canvas = document.getElementById('wave-canvas');
+        const canvas = document.getElementById('wave');
         const ctx = canvas.getContext('2d');
-        const status = document.getElementById('status');
         let offset = 0;
 
         function draw() {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             ctx.beginPath();
             ctx.strokeStyle = '#f59e0b';
-            ctx.lineWidth = 2;
-
+            ctx.lineWidth = 1.5;
             for (let x = 0; x < canvas.width; x++) {
-                const y = Math.sin(x * 0.05 + offset) * 50 + 150 + Math.random() * 10;
-                if (x === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
+                const y = Math.sin(x * 0.05 + offset) * 40 + 125 + Math.random() * 5;
+                if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
             }
             ctx.stroke();
-
-            // Anomalía aleatoria
-            if (Math.random() > 0.98) {
-                status.innerText = "ANOMALY DETECTED";
-                status.style.background = "rgba(255,0,0,0.2)";
-                status.style.color = "#ff0000";
-            } else if (Math.random() < 0.05) {
-                status.innerText = "SPECTRA OK";
-                status.style.background = "rgba(0,255,0,0.2)";
-                status.style.color = "#00ff00";
-            }
-
-            offset += 0.1;
+            offset += 0.2;
             requestAnimationFrame(draw);
         }
         draw();
+
+        let scanX = 0;
+        function startScan() {
+            const line = document.getElementById('scan-line');
+            const interval = setInterval(() => {
+                scanX += 5;
+                line.style.left = scanX + 'px';
+                if (scanX >= canvas.width) {
+                    clearInterval(interval);
+                    showDiagnosis();
+                }
+            }, 20);
+        }
+
+        function showDiagnosis() {
+            const status = document.getElementById('diag-status');
+            const details = document.getElementById('diag-details');
+            const action = document.getElementById('action-box');
+            const scl = document.getElementById('scl');
+
+            const isAnomalous = Math.random() > 0.5;
+
+            if (isAnomalous) {
+                status.innerHTML = "⚠️ <span style='color: var(--p)'>ANOMALÍA DETECTADA: FATIGA TÉRMICA</span>";
+                details.innerText = "El agente IA ha detectado una fisura molecular incipiente en la base del eje J3. Se recomienda reducción de velocidad inmediata.";
+                action.style.display = 'block';
+                scl.style.display = 'block';
+                scl.innerText = `IF #Eje_J3_Speed > 40.0 THEN\n  #Eje_J3_Speed := 40.0; // Limitación por seguridad\n  #Alert_Maintenance := TRUE;\nEND_IF;`;
+            } else {
+                status.innerHTML = "✅ <span style='color: #4ade80'>ESTADO ÓPTIMO</span>";
+                details.innerText = "No se detectan desviaciones espectrales significativas. La integridad del material cumple con los estándares ISO 9001.";
+                action.style.display = 'none';
+            }
+            scanX = 0;
+            document.getElementById('scan-line').style.left = '0';
+        }
     </script>
 </body>
 
