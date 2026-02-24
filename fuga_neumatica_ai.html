@@ -3,179 +3,331 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>AcousticLeak-AI | Sensor Activo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono&display=swap"
+    <title>AcousticLeak-AI | Sensor Industrial Activo</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --p: #06b6d4;
+            --cyan: #06b6d4;
             --bg: #020617;
             --card: #0f172a;
-            --accent: #22d3ee;
+            --hi: #22d3ee;
+            --red: #ef4444;
+            --green: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg);
-            color: white;
+            color: #e2e8f0;
             margin: 0;
-            padding: 40px;
+            padding: 30px;
         }
 
-        .hero {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(rgba(6, 182, 212, 0.1), transparent);
-            border-radius: 30px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto 20px;
         }
 
-        h1 {
-            font-size: 2.5rem;
+        .top-bar h1 {
             margin: 0;
-            color: var(--accent);
-            letter-spacing: 2px;
+            font-size: 1.8rem;
+            color: var(--hi);
         }
 
-        .dashboard {
+        .status-chip {
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .chip-off {
+            background: rgba(255, 255, 255, 0.05);
+            color: #64748b;
+        }
+
+        .chip-on {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--green);
+        }
+
+        .chip-alert {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--red);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 30px;
-            max-width: 1300px;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .analyzer-panel {
+        /* Analyzer Panel */
+        .panel {
             background: var(--card);
             border-radius: 24px;
             padding: 30px;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        .visualizer {
+        .viz-wrap {
+            position: relative;
+        }
+
+        .viz {
             width: 100%;
-            height: 250px;
+            height: 220px;
             background: #000;
-            border-radius: 15px;
-            border: 1px solid #334155;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
             display: block;
         }
 
-        .level-meter {
-            height: 10px;
-            background: #111;
-            border-radius: 5px;
+        .db-meter {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin-top: 20px;
+        }
+
+        .db-label {
+            font-family: 'JetBrains Mono';
+            font-size: 2rem;
+            color: var(--hi);
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .db-bar-wrap {
+            flex: 1;
+            height: 14px;
+            background: #111;
+            border-radius: 7px;
             overflow: hidden;
             position: relative;
         }
 
-        .level-fill {
+        .db-fill {
             height: 100%;
-            background: var(--p);
-            width: 0%;
-            transition: 0.05s;
+            border-radius: 7px;
+            transition: width 0.08s;
+            background: linear-gradient(90deg, var(--green), var(--cyan), var(--red));
         }
 
-        .btn-mic {
-            background: var(--p);
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 20px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-mic:hover {
-            background: var(--accent);
-            transform: scale(1.02);
-        }
-
-        .btn-mic.active {
-            background: #ef4444;
-            color: white;
-        }
-
-        .stat-badge {
+        .db-threshold {
             position: absolute;
-            top: 30px;
-            right: 30px;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+            top: -2px;
+            height: 18px;
+            width: 2px;
+            background: #fff;
         }
 
-        .report-panel {
-            background: #1e293b;
-            border-radius: 24px;
-            padding: 30px;
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .btn-start {
+            background: var(--cyan);
+            color: #000;
+            flex: 1;
+        }
+
+        .btn-start:hover {
+            background: var(--hi);
+        }
+
+        .btn-start.active {
+            background: var(--red);
+            color: #fff;
+        }
+
+        .btn-threshold {
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            border: 1px solid #334155;
+        }
+
+        .threshold-config {
+            display: none;
+            margin-top: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .threshold-config label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .threshold-config input[type=range] {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        /* Diagnostics Panel */
+        .diag {
             display: flex;
             flex-direction: column;
         }
 
-        .scl-log {
+        .event-log {
+            flex: 1;
+            background: #000;
+            border-radius: 12px;
+            padding: 16px;
+            font-family: 'JetBrains Mono';
+            font-size: 0.8rem;
+            overflow-y: auto;
+            border: 1px solid #1e293b;
+            margin-top: 16px;
+            max-height: 300px;
+        }
+
+        .log-entry {
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .log-ok {
+            color: var(--green);
+        }
+
+        .log-warn {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        .log-info {
+            color: #64748b;
+        }
+
+        .scl-output {
             background: #000;
             color: #4ade80;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'JetBrains Mono';
             padding: 20px;
             border-radius: 12px;
-            margin-top: 20px;
-            font-size: 0.85rem;
-            flex: 1;
-            border: 1px solid #1f2937;
-            overflow-y: auto;
+            font-size: 0.82rem;
+            margin-top: 16px;
             display: none;
+            white-space: pre;
+            border: 1px solid #1e293b;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #334155;
+            color: #94a3b8;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .copy-btn:hover {
+            background: #475569;
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #334155;
+            font-size: 0.8rem;
+            margin-top: 40px;
         }
     </style>
 </head>
 
 <body>
-    <div class="hero">
-        <h1>AcousticLeak-AI</h1>
-        <p style="opacity: 0.7;">Detección Ultrasónica en Tiempo Real mediante Sensor MEMS (Micrófono Local)</p>
+    <div class="top-bar">
+        <h1>🎤 AcousticLeak-AI</h1>
+        <div id="statusChip" class="status-chip chip-off">SENSOR INACTIVO</div>
     </div>
 
-    <div class="dashboard">
-        <div class="analyzer-panel">
-            <div id="status" class="stat-badge" style="background:rgba(255,255,255,0.1); color:#666;">MICRÓFONO INACTIVO
+    <div class="grid">
+        <div class="panel">
+            <h2 style="margin-top:0;">Espectro de Frecuencias en Tiempo Real</h2>
+            <div class="viz-wrap">
+                <canvas class="viz" id="canvas"></canvas>
             </div>
-            <h3>Análisis del Espectro Acústico</h3>
-            <canvas class="visualizer" id="canvas"></canvas>
-            <div class="level-meter">
-                <div id="level" class="level-fill"></div>
+            <div class="db-meter">
+                <div class="db-label" id="dbVal">-- dB</div>
+                <div class="db-bar-wrap">
+                    <div class="db-fill" id="dbFill" style="width:0%"></div>
+                    <div class="db-threshold" id="dbThresh" style="left: 60%"></div>
+                </div>
             </div>
-            <button class="btn-mic" id="micBtn" onclick="toggleMic()">
-                <span id="micIcon">🎤</span> <span id="micText">CONECTAR MICRÓFONO DE PLANTA</span>
-            </button>
-            <p style="font-size: 0.8rem; color: #64748b; margin-top: 15px; text-align: center;">Nota: El sistema filtra
-                frecuencias de 20Hz-20kHz para aislar el siseo ultrasónico de fugas (>30kHz simulado).</p>
+            <div class="controls">
+                <button class="btn btn-start" id="micBtn" onclick="toggleMic()">CONECTAR MICRÓFONO</button>
+                <button class="btn btn-threshold" onclick="toggleThreshold()">⚙ UMBRAL</button>
+            </div>
+            <div class="threshold-config" id="threshConfig">
+                <label>Umbral de alarma (dB simulado): <strong id="threshVal">60</strong></label>
+                <input type="range" min="20" max="100" value="60" oninput="setThreshold(this.value)">
+                <p style="font-size:0.75rem; color:#475569; margin-top:8px;">Un umbral bajo es más sensible (más
+                    alertas). Ajústalo según el ruido ambiente de tu planta.</p>
+            </div>
         </div>
 
-        <div class="report-panel">
-            <h2>Diagnóstico Automático</h2>
-            <div id="diag-res" style="color: #94a3b8; line-height: 1.6;">Inicia la escucha para que la IA procese la
-                firma acústica ambiental buscando patrones de turbulencia neumática.</div>
-            <div id="scl-out" class="scl-log"></div>
+        <div class="panel diag">
+            <h2 style="margin-top:0;">Diagnóstico IA</h2>
+            <div id="diagResult" style="color:#64748b; line-height:1.6;">Conecta el micrófono para iniciar el análisis
+                acústico. La IA buscará patrones de turbulencia neumática en tiempo real.</div>
+            <div class="event-log" id="eventLog">
+                <div class="log-entry log-info">[Sistema] Esperando conexión de sensor...</div>
+            </div>
+            <div class="scl-output" id="sclBox">
+                <button class="copy-btn" onclick="copySCL()">COPIAR</button>
+                <span id="sclCode"></span>
+            </div>
         </div>
     </div>
+
+    <footer>Documento realizado por <b>Izan Urios</b> de 3R de Automatización y Robótica industrial</footer>
 
     <script>
-        let audioCtx, analyser, dataArray, source, stream;
+        let audioCtx, analyser, dataArray, micSource, stream;
         let running = false;
+        let threshold = 60;
+        let alertCooldown = false;
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
-        const level = document.getElementById('level');
 
         async function toggleMic() {
             if (!running) {
@@ -183,66 +335,127 @@
                     stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     analyser = audioCtx.createAnalyser();
-                    source = audioCtx.createMediaStreamSource(stream);
-                    source.connect(analyser);
-                    analyser.fftSize = 256;
+                    micSource = audioCtx.createMediaStreamSource(stream);
+                    micSource.connect(analyser);
+                    analyser.fftSize = 512;
+                    analyser.smoothingTimeConstant = 0.8;
                     dataArray = new Uint8Array(analyser.frequencyBinCount);
 
                     running = true;
+                    document.getElementById('micBtn').innerText = 'DETENER ESCUCHA';
                     document.getElementById('micBtn').classList.add('active');
-                    document.getElementById('micText').innerText = "DETENER ESCUCHA INDUSTRIAL";
-                    document.getElementById('status').innerText = "SISTEMA: ESCUCHANDO...";
-                    document.getElementById('status').style.color = "#10b981";
-                    document.getElementById('status').style.background = "rgba(16,185,129,0.1)";
-                    document.getElementById('diag-res').innerText = "Analizando ruido de fondo... IA buscando picos ultrasónicos.";
-                    draw();
+                    setChip('on', 'ESCUCHANDO...');
+                    logEvent('Micrófono conectado. Analizando espectro.', 'ok');
+                    document.getElementById('diagResult').innerText = 'Analizando ruido ambiente... buscando picos de alta frecuencia compatibles con fugas.';
+                    render();
                 } catch (e) {
-                    alert('Error: No se pudo acceder al micrófono. Verifica los permisos.');
+                    alert('No se pudo acceder al micrófono. Comprueba los permisos del navegador.');
                 }
             } else {
                 running = false;
                 stream.getTracks().forEach(t => t.stop());
                 audioCtx.close();
+                document.getElementById('micBtn').innerText = 'CONECTAR MICRÓFONO';
                 document.getElementById('micBtn').classList.remove('active');
-                document.getElementById('micText').innerText = "CONECTAR MICRÓFONO DE PLANTA";
-                document.getElementById('status').innerText = "MICRÓFONO INACTIVO";
-                document.getElementById('status').style.color = "#666";
-                document.getElementById('level').style.width = "0%";
+                setChip('off', 'SENSOR INACTIVO');
+                document.getElementById('dbVal').innerText = '-- dB';
+                document.getElementById('dbFill').style.width = '0%';
+                logEvent('Escucha detenida por el operador.', 'info');
             }
         }
 
-        function draw() {
+        function render() {
             if (!running) return;
-            requestAnimationFrame(draw);
+            requestAnimationFrame(render);
             analyser.getByteFrequencyData(dataArray);
 
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Canvas dimensions
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const W = canvas.width, H = canvas.height;
 
-            let avg = 0;
-            const barWidth = (canvas.width / dataArray.length) * 2.5;
-            let x = 0;
+            // Background
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, W, H);
+
+            // Frequency bars
+            const barW = (W / dataArray.length) * 2;
+            let x = 0, sum = 0;
 
             for (let i = 0; i < dataArray.length; i++) {
-                const h = (dataArray[i] / 255) * canvas.height;
-                ctx.fillStyle = `hsl(${200 + (dataArray[i] / 2)}, 100%, 50%)`;
-                ctx.fillRect(x, canvas.height - h, barWidth, h);
-                x += barWidth + 1;
-                avg += dataArray[i];
+                const val = dataArray[i];
+                const h = (val / 255) * H;
+                const hue = 180 + (val * 0.6);
+                ctx.fillStyle = `hsla(${hue}, 90%, 55%, 0.85)`;
+                ctx.fillRect(x, H - h, barW - 1, h);
+                x += barW;
+                sum += val;
             }
 
-            const intensity = avg / dataArray.length;
-            level.style.width = Math.min(intensity * 1.5, 100) + "%";
+            // dB simulation
+            const avg = sum / dataArray.length;
+            const db = Math.round(avg * 0.6);
+            document.getElementById('dbVal').innerText = db + ' dB';
+            document.getElementById('dbFill').style.width = Math.min(db, 100) + '%';
 
-            // Lógica de detección IA
-            if (intensity > 40) { // Simulación de siseo fuerte
-                document.getElementById('diag-res').innerHTML = "<b style='color:#ef4444'>ALERTA:</b> Firma acústica compatible con fuga de presión en Estación 3. Generando código de aislamiento.";
-                document.getElementById('scl-out').style.display = "block";
-                document.getElementById('scl-out').innerText = `IF #Sensor_Acoustic_L3 > 85.0 THEN\n  #Válvula_Presión_L3 := FALSE;\n  #IA_Leak_Report := 'A-77';\nEND_IF;`;
-                level.style.background = "#ef4444";
-            } else {
-                level.style.background = "var(--p)";
+            // Leak detection logic
+            if (db > threshold && !alertCooldown) {
+                alertCooldown = true;
+                setChip('alert', 'FUGA DETECTADA');
+                logEvent(`ALERTA: Nivel acústico ${db}dB supera umbral ${threshold}dB. Firma compatible con fuga neumática.`, 'warn');
+                document.getElementById('diagResult').innerHTML = `<b style="color:${db > 80 ? '#ef4444' : '#f59e0b'}">ANOMALÍA DETECTADA</b><br>Nivel: ${db}dB | Umbral: ${threshold}dB<br>Clasificación: Turbulencia neumática en circuito de alta presión.<br><br>Se ha generado código SCL de aislamiento preventivo.`;
+                showSCL(db);
+                setTimeout(() => { alertCooldown = false; }, 5000);
+            } else if (db <= threshold && !alertCooldown) {
+                setChip('on', 'ESCUCHANDO...');
             }
+        }
+
+        function showSCL(db) {
+            const box = document.getElementById('sclBox');
+            box.style.display = 'block';
+            document.getElementById('sclCode').innerText =
+                `// Generado por AcousticLeak-AI
+// Nivel detectado: ${db}dB
+IF #Sensor_Acoustic > ${threshold}.0 THEN
+    #Válvula_Corte := TRUE;
+    #Alarma_Fuga := TRUE;
+    #Registro_Evento := 'Leak_${new Date().toISOString().slice(0, 10)}';
+END_IF;`;
+        }
+
+        function copySCL() {
+            const code = document.getElementById('sclCode').innerText;
+            navigator.clipboard.writeText(code);
+            const btn = document.querySelector('.copy-btn');
+            btn.innerText = '✓ COPIADO'; setTimeout(() => btn.innerText = 'COPIAR', 2000);
+        }
+
+        function setChip(mode, text) {
+            const chip = document.getElementById('statusChip');
+            chip.innerText = text;
+            chip.className = 'status-chip chip-' + mode;
+        }
+
+        function logEvent(msg, type) {
+            const log = document.getElementById('eventLog');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry log-' + type;
+            entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function toggleThreshold() {
+            const c = document.getElementById('threshConfig');
+            c.style.display = c.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function setThreshold(val) {
+            threshold = parseInt(val);
+            document.getElementById('threshVal').innerText = val;
+            document.getElementById('dbThresh').style.left = val + '%';
+            logEvent(`Umbral de alarma ajustado a ${val}dB.`, 'info');
         }
     </script>
 </body>
