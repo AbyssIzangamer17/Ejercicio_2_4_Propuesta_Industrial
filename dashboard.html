@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EcoFlow AI - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #020617;
+            color: white;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .tile {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .tile:hover {
+            transform: translateY(-5px);
+            border-color: #22c55e;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #22c55e;
+        }
+
+        .status-on {
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        .status-off {
+            color: #f87171;
+            font-weight: 600;
+        }
+
+        .header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 20px;
+        }
+
+        .log-box {
+            margin-top: 30px;
+            background: #000;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #94a3b8;
+            height: 150px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>🌿 EcoFlow AI <span style="font-weight: 300; font-size: 0.5em; vertical-align: middle; color: #94a3b8;">v2.0
+                Visual Optimizer</span></h1>
+        <p>Sistema Multi-Agente de Optimización de Carga Industrial</p>
+    </div>
+
+    <div class="grid">
+        <div class="tile">
+            <h3>Precio Energía</h3>
+            <div class="price" id="price">0.12€</div>
+            <p>kWh (Tiempo Real)</p>
+        </div>
+        <div class="tile">
+            <h3>Prensa Hidráulica</h3>
+            <div id="m1" class="status-off">OFF</div>
+            <p>150kW - Agente Autónomo</p>
+        </div>
+        <div class="tile">
+            <h3>Horno Inducción</h3>
+            <div id="m2" class="status-off">OFF</div>
+            <p>400kW - Agente Autónomo</p>
+        </div>
+        <div class="tile">
+            <h3>Lógica IA</h3>
+            <p id="logic">Esperando ciclo...</p>
+        </div>
+    </div>
+
+    <div class="log-box" id="logs">
+        [SYSTEM] EcoFlow AI Engine v2.0 Initialized...<br>
+        [SYSTEM] Analizando mercado eléctrico...<br>
+    </div>
+
+    <script>
+        function update() {
+            const p = (Math.random() * (0.45 - 0.05) + 0.05).toFixed(2);
+            document.getElementById('price').innerText = p + '€';
+            const log = document.getElementById('logs');
+            const lText = document.getElementById('logic');
+
+            if (p < 0.25) {
+                document.getElementById('m1').innerText = 'ON'; document.getElementById('m1').className = 'status-on';
+                document.getElementById('m2').innerText = 'ON'; document.getElementById('m2').className = 'status-on';
+                lText.innerText = "IA: Precio bajo. Maximizando producción.";
+                log.innerHTML += `[${new Date().toLocaleTimeString()}] Optimización: Cargas pesadas activadas (Tarifa Valle).<br>`;
+            } else {
+                document.getElementById('m1').innerText = 'OFF'; document.getElementById('m1').className = 'status-off';
+                document.getElementById('m2').innerText = 'OFF'; document.getElementById('m2').className = 'status-off';
+                lText.innerText = "IA: Precio detectado alto. Ahorro activo.";
+                log.innerHTML += `[${new Date().toLocaleTimeString()}] Alerta: Desconexión de cargas para ahorro energético.<br>`;
+            }
+            log.scrollTop = log.scrollHeight;
+        }
+        setInterval(update, 3000);
+        update();
+    </script>
+</body>
+
+</html>
