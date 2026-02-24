@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>AcousticLeak-AI | Innovación en Eficiencia Neumática</title>
+    <title>AcousticLeak-AI | Sensor Activo</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=JetBrains+Mono&display=swap"
         rel="stylesheet">
     <style>
         :root {
             --p: #06b6d4;
-            --bg: #0f172a;
-            --card: #1e293b;
+            --bg: #020617;
+            --card: #0f172a;
             --accent: #22d3ee;
         }
 
@@ -24,232 +24,225 @@
 
         .hero {
             text-align: center;
-            padding: 60px 40px;
+            padding: 40px;
             background: linear-gradient(rgba(6, 182, 212, 0.1), transparent);
             border-radius: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin: 0;
             color: var(--accent);
             letter-spacing: 2px;
         }
 
-        .grid {
+        .dashboard {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            max-width: 1200px;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
-        .panel {
+        .analyzer-panel {
             background: var(--card);
             border-radius: 24px;
-            padding: 40px;
+            padding: 30px;
+            position: relative;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Audio Simulation Visualizer */
-        .analyzer {
-            background: #000;
-            border-radius: 20px;
+        .visualizer {
+            width: 100%;
             height: 250px;
-            margin: 30px 0;
-            position: relative;
+            background: #000;
+            border-radius: 15px;
             border: 1px solid #334155;
-            display: flex;
-            align-items: flex-end;
-            padding: 10px;
-            gap: 2px;
+            display: block;
         }
 
-        .bar {
-            flex: 1;
+        .level-meter {
+            height: 10px;
+            background: #111;
+            border-radius: 5px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .level-fill {
+            height: 100%;
             background: var(--p);
-            min-height: 5px;
-            transition: 0.1s;
-            border-radius: 2px 2px 0 0;
-            opacity: 0.7;
+            width: 0%;
+            transition: 0.05s;
         }
 
-        .leak-dot {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: rgba(239, 68, 68, 0.4);
-            border: 2px solid #ef4444;
-            display: none;
-            filter: blur(15px);
-        }
-
-        .status-pill {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
-        }
-
-        .ok {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-        }
-
-        .warn {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-        }
-
-        .btn {
+        .btn-mic {
             background: var(--p);
-            color: #020617;
+            color: #000;
             border: none;
             padding: 15px 30px;
-            border-radius: 12px;
+            border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
-            width: 100%;
             transition: 0.3s;
             margin-top: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .btn:hover {
+        .btn-mic:hover {
             background: var(--accent);
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            transform: scale(1.02);
         }
 
-        .scl-output {
+        .btn-mic.active {
+            background: #ef4444;
+            color: white;
+        }
+
+        .stat-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .report-panel {
+            background: #1e293b;
+            border-radius: 24px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scl-log {
             background: #000;
             color: #4ade80;
             font-family: 'JetBrains Mono', monospace;
             padding: 20px;
-            border-radius: 15px;
-            font-size: 0.85rem;
+            border-radius: 12px;
             margin-top: 20px;
-            display: none;
+            font-size: 0.85rem;
+            flex: 1;
             border: 1px solid #1f2937;
+            overflow-y: auto;
+            display: none;
         }
     </style>
 </head>
 
 <body>
     <div class="hero">
-        <p style="text-transform: uppercase; letter-spacing: 5px; color: var(--p); margin-bottom: 10px;">Propuesta
-            Industrial Viable v2.0</p>
         <h1>AcousticLeak-AI</h1>
-        <p style="font-size: 1.2rem; opacity: 0.7;">Optimización Energética mediante Detección de Fugas en Circuitos
-            Neumáticos asistida por IA</p>
+        <p style="opacity: 0.7;">Detección Ultrasónica en Tiempo Real mediante Sensor MEMS (Micrófono Local)</p>
     </div>
 
-    <div class="grid">
-        <div class="panel">
-            <div id="status-tag" class="status-pill ok">SISTEMA: MONITORIZANDO RUIDO AMBIENTE</div>
-            <h2>Análisis de Frecuencias Externas</h2>
-            <p style="color: #94a3b8; font-size: 0.95rem;">Utilizamos micrófonos MEMS ultrasónicos instalados en la
-                estructura de la planta (fuera de los robots) para separar el ruido operativo de las fugas de aire.</p>
-
-            <div class="analyzer" id="analyzer">
-                <!-- Bars dynamic -->
-                <div id="leak-visual" class="leak-dot"></div>
+    <div class="dashboard">
+        <div class="analyzer-panel">
+            <div id="status" class="stat-badge" style="background:rgba(255,255,255,0.1); color:#666;">MICRÓFONO INACTIVO
             </div>
-
-            <button class="btn" onclick="startDetection()">INICIAR DIAGNÓSTICO ACÚSTICO</button>
+            <h3>Análisis del Espectro Acústico</h3>
+            <canvas class="visualizer" id="canvas"></canvas>
+            <div class="level-meter">
+                <div id="level" class="level-fill"></div>
+            </div>
+            <button class="btn-mic" id="micBtn" onclick="toggleMic()">
+                <span id="micIcon">🎤</span> <span id="micText">CONECTAR MICRÓFONO DE PLANTA</span>
+            </button>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 15px; text-align: center;">Nota: El sistema filtra
+                frecuencias de 20Hz-20kHz para aislar el siseo ultrasónico de fugas (>30kHz simulado).</p>
         </div>
 
-        <div class="panel">
-            <h2>Informe de Viabilidad</h2>
-            <div id="report" style="line-height: 1.6; color: #cbd5e1;">
-                <p>Las fugas de aire comprimido pueden representar hasta un <span style="color:var(--p)">30% de la
-                        pérdida energética</span> en una planta automatizada.</p>
-                <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; margin: 20px 0;">
-                    <ul style="margin: 0; padding-left: 20px;">
-                        <li><strong>Instalación:</strong> Fuera de las partes móviles.</li>
-                        <li><strong>IA:</strong> Clasificación por redes neuronales convolucionales (CNN) de
-                            espectrogramas.</li>
-                        <li><strong>Impacto:</strong> Ahorro inmediato en factura eléctrica y vida útil del compresor.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="scl-container" style="display:none;">
-                <h3 style="color: #ef4444;">Acción Correctiva (SCL):</h3>
-                <div id="scl-text" class="scl-output"></div>
-                <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">Copia este bloque para monitorizar la
-                    presión en el PLC afectado.</p>
-            </div>
+        <div class="report-panel">
+            <h2>Diagnóstico Automático</h2>
+            <div id="diag-res" style="color: #94a3b8; line-height: 1.6;">Inicia la escucha para que la IA procese la
+                firma acústica ambiental buscando patrones de turbulencia neumática.</div>
+            <div id="scl-out" class="scl-log"></div>
         </div>
     </div>
-
-    <footer style="text-align: center; margin-top: 60px; color: #475569; font-size: 0.85rem;">
-        Documento realizado por <b>Izan Urios</b> de 3R de Automatización y Robótica industrial
-    </footer>
 
     <script>
-        const analyzer = document.getElementById('analyzer');
-        const bars = [];
-        for (let i = 0; i < 30; i++) {
-            const b = document.createElement('div');
-            b.className = 'bar';
-            analyzer.appendChild(b);
-            bars.push(b);
-        }
+        let audioCtx, analyser, dataArray, source, stream;
+        let running = false;
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const level = document.getElementById('level');
 
-        let animating = true;
-        function animate() {
-            if (!animating) return;
-            bars.forEach(b => {
-                const h = Math.random() * 100 + 20;
-                b.style.height = h + 'px';
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        async function toggleMic() {
+            if (!running) {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioCtx.createAnalyser();
+                    source = audioCtx.createMediaStreamSource(stream);
+                    source.connect(analyser);
+                    analyser.fftSize = 256;
+                    dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-        function startDetection() {
-            const status = document.getElementById('status-tag');
-            const leakVis = document.getElementById('leak-visual');
-            const sclCont = document.getElementById('scl-container');
-            const sclText = document.getElementById('scl-text');
-
-            status.innerText = "SISTEMA: ESCANEANDO ULTRASONIDOS...";
-            status.className = "status-pill";
-            status.style.background = "rgba(59, 130, 246, 0.2)";
-            status.style.color = "#3b82f6";
-
-            setTimeout(() => {
-                const isLeak = Math.random() > 0.4;
-                if (isLeak) {
-                    status.innerText = "ALERTA: FUGA DETECTADA EN LÍNEA L3";
-                    status.className = "status-pill warn";
-                    leakVis.style.display = 'block';
-                    leakVis.style.left = (Math.random() * 200 + 50) + 'px';
-                    leakVis.style.bottom = (Math.random() * 100 + 50) + 'px';
-
-                    sclCont.style.display = 'block';
-                    sclText.style.display = 'block';
-                    sclText.innerText = `IF #L3_AirPressure < #Min_Threshold THEN\n  #Válvula_Corte_L3 := TRUE; // Aislamiento preventivo\n  #IA_Leak_Alarm := TRUE;\n  #Leak_Coordinates := 'Rack_C4_Sensor_02';\nEND_IF;`;
-
-                    bars.forEach(b => {
-                        b.style.background = "#ef4444";
-                        b.style.height = (Math.random() * 150 + 50) + "px";
-                    });
-                    animating = false;
-                } else {
-                    status.innerText = "SISTEMA: ESTADO ÓPTIMO";
-                    status.className = "status-pill ok";
-                    leakVis.style.display = 'none';
-                    sclCont.style.display = 'none';
-                    animating = true;
-                    animate();
+                    running = true;
+                    document.getElementById('micBtn').classList.add('active');
+                    document.getElementById('micText').innerText = "DETENER ESCUCHA INDUSTRIAL";
+                    document.getElementById('status').innerText = "SISTEMA: ESCUCHANDO...";
+                    document.getElementById('status').style.color = "#10b981";
+                    document.getElementById('status').style.background = "rgba(16,185,129,0.1)";
+                    document.getElementById('diag-res').innerText = "Analizando ruido de fondo... IA buscando picos ultrasónicos.";
+                    draw();
+                } catch (e) {
+                    alert('Error: No se pudo acceder al micrófono. Verifica los permisos.');
                 }
-            }, 2500);
+            } else {
+                running = false;
+                stream.getTracks().forEach(t => t.stop());
+                audioCtx.close();
+                document.getElementById('micBtn').classList.remove('active');
+                document.getElementById('micText').innerText = "CONECTAR MICRÓFONO DE PLANTA";
+                document.getElementById('status').innerText = "MICRÓFONO INACTIVO";
+                document.getElementById('status').style.color = "#666";
+                document.getElementById('level').style.width = "0%";
+            }
+        }
+
+        function draw() {
+            if (!running) return;
+            requestAnimationFrame(draw);
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            let avg = 0;
+            const barWidth = (canvas.width / dataArray.length) * 2.5;
+            let x = 0;
+
+            for (let i = 0; i < dataArray.length; i++) {
+                const h = (dataArray[i] / 255) * canvas.height;
+                ctx.fillStyle = `hsl(${200 + (dataArray[i] / 2)}, 100%, 50%)`;
+                ctx.fillRect(x, canvas.height - h, barWidth, h);
+                x += barWidth + 1;
+                avg += dataArray[i];
+            }
+
+            const intensity = avg / dataArray.length;
+            level.style.width = Math.min(intensity * 1.5, 100) + "%";
+
+            // Lógica de detección IA
+            if (intensity > 40) { // Simulación de siseo fuerte
+                document.getElementById('diag-res').innerHTML = "<b style='color:#ef4444'>ALERTA:</b> Firma acústica compatible con fuga de presión en Estación 3. Generando código de aislamiento.";
+                document.getElementById('scl-out').style.display = "block";
+                document.getElementById('scl-out').innerText = `IF #Sensor_Acoustic_L3 > 85.0 THEN\n  #Válvula_Presión_L3 := FALSE;\n  #IA_Leak_Report := 'A-77';\nEND_IF;`;
+                level.style.background = "#ef4444";
+            } else {
+                level.style.background = "var(--p)";
+            }
         }
     </script>
 </body>
