@@ -1,25 +1,15 @@
-# 🌿 Ejercicio 2.4: EcoFlow AI Optimizer
-### Optimización Multi-Agente para Eficiencia Energética Industrial
+# 🚀 Ejercicio 2.4: A-SPECTRA IA
+### Propuesta de Innovación Industrial: Mantenimiento Predictivo Hiperespectral
 
-## 🚀 Inicio Rápido
+Una propuesta argumentada de solución tecnológica de vanguardia para el sector industrial, integrando Agentes IA y Visión Artificial Avanzada.
 
-1. **Clonar**:
-   ```bash
-   git clone https://github.com/AbyssIzangamer17/Ejercicio_2_4_Propuesta_Industrial.git
-   cd Ejercicio_2_4_Propuesta_Industrial
-   ```
+## 🚀 Acceso a la Propuesta
+👉 **[Abrir Documento A-SPECTRA](propuesta_innovacion.html)**
 
-2. **Ejecutar**:
-   ```powershell
-   python ecoflow_prototype.py
-   ```
-
-## 📊 Visualización de Resultados
-Al ejecutar la simulación, verás un log horario (de 08:00 a 20:00):
-- **Precio Luz**: Variación dinámica en €/kWh.
-- **Consumo Activo**: Los kW totales en uso.
-- **Agentes en Marcha**: Lista de máquinas activas solo cuando el precio es bajo.
-- **Ahorro**: Verás cómo el sistema apaga cargas pesadas cuando el precio sube.
+## 📋 Especificaciones
+- **Proyecto Útil**: Detección de fatiga de materiales mediante espectrometría visual sin contacto.
+- **Originalidad**: Uso de agentes autónomos para la toma de decisiones en el "Edge", minimizando paradas de línea imprevistas.
+- **Viabilidad**: Análisis de reducción de costes operativos y mejora del OEE (Overall Equipment Effectiveness).
 
 ## 👤 Autor
 **Izan Urios** - 3R de Automatización y Robótica Industrial.
