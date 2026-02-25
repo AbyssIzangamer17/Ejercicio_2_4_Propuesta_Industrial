@@ -14,10 +14,29 @@ El proyecto consiste en crear una propuesta de innovación industrial viable que
 
 **Fuente:** PDF de Instrucciones del Ejercicio (Captura 2026-02-24)
 
-**Prompt original:**
+**Contexto del ejercicio:**
+El Ejercicio 2.4 forma parte del bloque "Habilidades del Ecosistema IA" del módulo. Este ejercicio es especialmente importante ya que requiere demostrar capacidad de innovación y pensamiento crítico para proponer una solución industrial propia.
+
+**Prompt original extraído del PDF:**
 > "Exercici 2.4. Proposta pròpia de innovació industrial. Crear una proposta útil i fonamentada."
 
-Este prompt establece la creación de una propuesta propia de innovación industrial útil y fundamentada como objetivo del ejercicio.
+**Interpretación y desarrollo:**
+Este prompt establece como objetivo la creación de una propuesta propia de innovación industrial que sea útil y fundamentada. A diferencia de los ejercicios anteriores que tienen un objetivo definido, aquí se requiere:
+
+1. **Identificar un problema real** de la industria
+2. **Investigar soluciones existentes**
+3. **Proponer una innovación** que utilize herramientas de IA
+4. **Fundamentar la propuesta** con datos y viabilidad técnica
+
+La propuesta debe demostrar:
+- Conocimiento del sector industrial
+- Capacidad de análisis de problemas
+- Pensamiento innovador
+- Viabilidad técnica y económica
+- Integración con el ecosistema de habilidades del módulo
+
+**Desarrollo del proyecto:** 
+Se propuso AcousticLeak-AI, un sistema de detección de fugas neumáticas mediante análisis acústico. Las fugas de aire comprimido representan hasta el 30% del consumo energético en instalaciones industriales, lo que hace que su detección temprana tenga un impacto económico significativo.
 
 ---
 
