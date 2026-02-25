@@ -10,6 +10,17 @@ El proyecto consiste en crear una propuesta de innovación industrial viable que
 
 ---
 
+### Prompt de Origen
+
+**Fuente:** PDF de Instrucciones del Ejercicio (Captura 2026-02-24)
+
+**Prompt original:**
+> "Exercici 2.4. Proposta pròpia de innovació industrial. Crear una proposta útil i fonamentada."
+
+Este prompt establece la creación de una propuesta propia de innovación industrial útil y fundamentada como objetivo del ejercicio.
+
+---
+
 ### Prompts Utilizados
 
 #### Prompt #1
